@@ -1,0 +1,208 @@
+/* ===============================================
+   Red & White Login Page — Clean Animated Layout
+   Theme: Red (#8f0500), Yellow (#fdba13), White
+   =============================================== */
+
+.registerPage {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ---------- LEFT RED IMAGE SECTION ---------- */
+.leftSection {
+  width: 50%;
+  position: relative;
+  background: url("https://images.pexels.com/photos/8199665/pexels-photo-8199665.jpeg")
+    center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.tagline {
+  font-size: 1.1rem;
+  color: #f8f8f8;
+  line-height: 1.5;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* ---------- RIGHT FORM SECTION ---------- */
+.rightSection {
+  width: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: slideInRight 0.5s ease-out;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 400px;
+  text-align: left;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.heading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.subHeading {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+/* ---------- FORM STYLING ---------- */
+.formBox {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+/* ---------- BUTTONS ---------- */
+.signInButton {
+  background: #fdba13;
+  color: #8f0500;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 8px;
+  transition: all 0.3s ease;
+}
+
+.signInButton:hover {
+  background: #8f0500;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(143, 5, 0, 0.3);
+}
+
+.createAccountButton {
+  background: transparent;
+  border: 2px solid #8f0500;
+  color: #8f0500;
+  padding: 12px;
+  width: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+}
+
+.createAccountButton:hover {
+  background: #8f0500;
+  color: #fff;
+  transform: scale(1.02);
+}
+
+/* ---------- PASSWORD ROW ---------- */
+.passwordRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.forgotPassword {
+  background: none;
+  border: none;
+  color: #8f0500;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.forgotPassword:hover {
+  text-decoration: underline;
+}
+
+/* ---------- DIVIDER ---------- */
+.divider {
+  position: relative;
+  text-align: center;
+  margin: 25px 0;
+  font-size: 0.8rem;
+  color: #888;
+}
+.divider span {
+  background: #fff;
+  padding: 0 10px;
+  position: relative;
+  z-index: 1;
+}
+.divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #ddd;
+  z-index: 0;
+}
+
+/* ---------- TERMS & LINKS ---------- */
+.terms {
+  font-size: 0.75rem;
+  color: #777;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.link {
+  color: #8f0500;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* ---------- ANIMATIONS ---------- */
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

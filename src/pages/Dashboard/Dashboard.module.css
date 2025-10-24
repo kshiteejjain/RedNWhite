@@ -1,0 +1,161 @@
+.dashboard {
+  padding: 25px 30px;
+  background: #f9fafb;
+  min-height: 100vh;
+  color: #1f2937;
+}
+
+/* Cards */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 18px 20px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+.card h3 {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.card h2 {
+  margin: 5px 0;
+  font-size: 1.7rem;
+  color: #111827;
+}
+
+.greenText {
+  color: #16a34a;
+  font-size: 0.85rem;
+}
+
+.redText {
+  color: #dc2626;
+  font-size: 0.85rem;
+}
+
+/* Charts */
+.chartSection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 25px;
+  margin-bottom: 30px;
+}
+/* Table */
+.tableSection {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.tableSection h2 {
+  margin-bottom: 15px;
+  color: #111827;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 12px 10px;
+  text-align: left;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.table th {
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.table tr:hover {
+  background: #f9fafb;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.edtech {
+  background: #2563eb;
+}
+
+.fintech {
+  background: #10b981;
+}
+
+.social {
+  background: #ef4444;
+}
+
+.healthtech {
+  background: #8b5cf6;
+}
+
+/* Status Pills */
+.status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.completed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.active {
+  background: #fef9c3;
+  color: #92400e;
+}
+
+.pending {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* Progress Bar */
+.progressWrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.progressBar {
+  height: 8px;
+  width: 100px;
+  background: #f3f4f6;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progressBar div {
+  height: 100%;
+  background: #3b82f6;
+  border-radius: 10px;
+  transition: width 0.4s ease;
+}

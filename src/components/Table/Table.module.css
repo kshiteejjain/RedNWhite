@@ -1,0 +1,61 @@
+.wrapper {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  padding: 15px;
+}
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.input, .select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.th{
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+.td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: normal;
+  color: #3e3e3e;
+}
+.th{
+  border: 1px solid #ddd;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #3e3e3e;
+}
+.tr:hover{
+  background-color: #ebecf1;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.pagination .button {
+  padding: 5px 10px;
+  border: none;
+  background: #2a5298;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.pagination button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}

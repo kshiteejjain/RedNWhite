@@ -40,3 +40,100 @@ a {
     color-scheme: dark;
   }
 }
+
+p{
+  font-size: 14px;
+  color: #3e3e3e;
+}
+
+/* Form group wrapper */
+.form-group {
+  margin-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Label styling */
+.form-group label {
+  color: #333;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+/* Input field */
+.form-control {
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  outline: none;
+  background: #fff;
+}
+
+.form-control:focus {
+  border-color: #eeac05;
+  box-shadow: 0 0 6px rgba(143, 5, 0, 0.25);
+}
+
+/* Optional: yellow submit button */
+.btn-primary {
+  background-color: #fdba13;
+  color: #000;
+  font-weight: 600;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.btn-primary:hover {
+  background-color: #eeac05;
+  box-shadow: 0 4px 15px rgba(143, 5, 0, 0.3);
+}
+
+.btn-secondary {
+  color: #fff;
+  cursor: pointer;
+  box-sizing: border-box;
+  background-color: #8f0500;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+  padding: 12px;
+  font-weight: 600;
+  transition: all .3s;
+}
+
+.btn-secondary:hover {
+  background-color: #eeac05;
+  box-shadow: 0 4px 15px rgba(143, 5, 0, 0.3);
+}
+
+.overlay {
+  background: rgba(143, 5, 0, 0.85);
+  color: #fff;
+  padding: 60px;
+  text-align: center;
+  border-radius: 12px;
+  animation: fadeIn 0.5s ease-in;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-actions .btn {
+  width: 49%;
+}

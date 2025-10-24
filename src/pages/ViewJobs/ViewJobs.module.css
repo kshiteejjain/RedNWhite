@@ -1,0 +1,10 @@
+.view-jobs {
+  padding: 20px;
+  background: #f8f9fa;
+}
+.jobInfo{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 10px;
+}
