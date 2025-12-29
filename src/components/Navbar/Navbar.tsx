@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { clearSession } from "@/utils/authSession";
 import styles from "./Navbar.module.css";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const { pathname } = useRouter(); // Destructure pathname directly from router
+  const { pathname, push } = useRouter(); // Destructure pathname directly from router
   const [pageTitle, setPageTitle] = useState("Dashboard"); // Default title
 
   useEffect(() => {
@@ -12,6 +13,11 @@ export default function Navbar() {
     const title = pathname.split("/").pop()?.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase()) || "Dashboard";
     setPageTitle(title); // Set the page title
   }, [pathname]); // Only re-run when the pathname changes
+
+  const goToProfile = () => {
+    setOpen(false);
+    push("/Profile");
+  };
 
   return (
     <header className={styles.navbar}>
@@ -33,9 +39,31 @@ export default function Navbar() {
           </span>
           {open && (
             <ul className={styles.dropdown}>
-              <li>Profile</li>
-              <li>Settings</li>
-              <li>Logout</li>
+              <li className={styles.menuRow} onClick={goToProfile}>
+                <span className={styles.menuIcon} aria-hidden="true">
+                  👤
+                </span>
+                <span>Profile</span>
+              </li>
+              <li className={styles.menuRow}>
+                <span className={styles.menuIcon} aria-hidden="true">
+                  ⚙️
+                </span>
+                <span>Settings</span>
+              </li>
+              <li
+                className={styles.menuRow}
+                onClick={() => {
+                  clearSession();
+                  setOpen(false);
+                  push("/login");
+                }}
+              >
+                <span className={styles.menuIcon} aria-hidden="true">
+                  🚪
+                </span>
+                <span>Logout</span>
+              </li>
             </ul>
           )}
         </div>

@@ -1,16 +1,29 @@
 import { useEffect, useState } from "react";
 import Layout from "@/components/Layout/Layout";
 import styles from "./InterviewQuestions.module.css";
+import headerStyles from "../Projects/AddProject.module.css";
 import questionsData from "@/utils/interviewQuestions.json";
 import confetti from "canvas-confetti";
+import {
+  createRecordFromSchema,
+  loadSchemaRecords,
+  saveSchemaRecords,
+  syncRecordWithSchema,
+} from "@/utils/schemaUtils";
+import { interviewAttemptSchema } from "@/utils/formSchemas";
 
 export default function InterviewQuestions() {
   type CategoryType = keyof typeof questionsData;
-  const [category, setCategory] = useState<CategoryType | 'all'>("fullstack");
+  const initialAttempt = createRecordFromSchema(interviewAttemptSchema);
+  const [category, setCategory] = useState<CategoryType | "all">(
+    initialAttempt.category as CategoryType | "all"
+  );
   const [questions, setQuestions] = useState<any[]>([]);
-  const [answers, setAnswers] = useState<Record<number, string>>({});
-  const [score, setScore] = useState<number | null>(null);
-  const [username, setUsername] = useState("");
+  const [answers, setAnswers] = useState<Record<number, string>>(
+    initialAttempt.answers
+  );
+  const [score, setScore] = useState<number | null>(initialAttempt.score);
+  const [username, setUsername] = useState(initialAttempt.username);
 
   useEffect(() => {
     const all = Object.values(questionsData).flat();
@@ -34,13 +47,29 @@ export default function InterviewQuestions() {
         q.answer.trim().toLowerCase() && correct++
     );
     setScore(correct);
+    const percentValue =
+      questions.length > 0
+        ? Math.round((correct / questions.length) * 100)
+        : 0;
+    const attempt = syncRecordWithSchema(interviewAttemptSchema, {
+      username,
+      category,
+      answers,
+      score: correct,
+      total: questions.length,
+      percent: percentValue,
+      createdAt: new Date().toISOString(),
+    });
+    const existing = loadSchemaRecords(interviewAttemptSchema, []);
+    saveSchemaRecords(interviewAttemptSchema, [attempt, ...existing]);
     if (correct / questions.length >= 0.8)
       confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
   };
 
   const handleReset = () => {
-    setScore(null);
-    setAnswers({});
+    const resetState = createRecordFromSchema(interviewAttemptSchema);
+    setScore(resetState.score);
+    setAnswers(resetState.answers);
   };
 
   const percent = score !== null ? Math.round((score / questions.length) * 100) : 0;
@@ -48,6 +77,15 @@ export default function InterviewQuestions() {
 
   return (
     <Layout>
+      <section className={headerStyles.header}>
+        <div>
+          <h2 className={headerStyles.title}>Practice interview questions</h2>
+          <p className={headerStyles.subtitle}>
+            Choose a track, answer questions, and track your performance over time.
+          </p>
+        </div>
+      </section>
+
       <form className={styles.formGroup}>
         <label htmlFor="categorySelect">Filter by Category:</label>
         <select

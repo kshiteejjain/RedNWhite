@@ -4,21 +4,23 @@ import { useRouter } from "next/router";
 import styles from "./Sidebar.module.css";
 
 const menuItems = [
-  { name: "🏠 Dashboard", path: "/Dashboard" },
-  { name: "📁 Add Projects", path: "/AddProject" },
-  { name: "💼 View Jobs", path: "/ViewJobs" },
-  { name: "🎯 Interview Preparation", path: "/InterviewQuestions" },
-  { name: "🧾 AI Resume Builder", path: "/comingsoon" },
-  { name: "🎙️ AI Mock Interview", path: "/comingsoon" },
-  { name: "💡 AI Project Ideas", path: "/comingsoon" },
-  { name: "💬 Discussion Forum", path: "/comingsoon" },
-  { name: "🤝 Mentorship", path: "/comingsoon" },
-  { name: "📘 Resource Library", path: "/comingsoon" },
-  { name: "🏆 Leaderboard", path: "/comingsoon" },
+  { name: "Dashboard", path: "/Dashboard" },
+  { name: 'Projects', path: "/Projects" },
+  { name: "View Jobs", path: "/ViewJobs" },
+  { name: "Interview Preparation", path: "/InterviewQuestions" },
+  { name: "AI Resume Builder", path: "/comingsoon" },
+  { name: "AI Mock Interview", path: "/comingsoon" },
+  { name: "AI Project Ideas", path: "/comingsoon" },
+  { name: "Discussion Forum", path: "/comingsoon" },
+  { name: "Mentorship", path: "/comingsoon" },
+  { name: 'Resource Library', path: "/comingsoon" },
+  { name: "Leaderboard", path: "/comingsoon" },
+  { name: "Upload", path: "/Upload" },
 ];
 
 export default function Sidebar() {
   const router = useRouter();
+  const currentPath = router.pathname;
 
   return (
     <aside className={styles.sidebar}>
@@ -28,7 +30,10 @@ export default function Sidebar() {
 
       <ul className={styles.menuList}>
         {menuItems.map((item) => {
-          const isActive = router.pathname === item.path;
+          const isProjects =
+            item.path === "/Projects" &&
+            (currentPath === "/Projects" || currentPath.startsWith("/Projects/"));
+          const isActive = currentPath === item.path || isProjects;
           return (
             <li
               key={item.name}

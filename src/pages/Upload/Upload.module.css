@@ -1,0 +1,118 @@
+.page {
+  padding: 28px 32px 44px;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #efe5ff;
+  box-shadow: 0 12px 28px rgba(80, 58, 180, 0.1);
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: fadeIn 0.3s ease;
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  color: #1f1f2f;
+}
+
+.subtitle {
+  margin: 0;
+  color: #4b4b57;
+  font-size: 14px;
+}
+
+.uploadButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #7b4bff, #ff6fba);
+  color: #fff;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(123, 75, 255, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: fit-content;
+}
+
+.uploadButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(123, 75, 255, 0.35);
+}
+
+.fileInput {
+  display: none;
+}
+
+.buttonLabel {
+  font-size: 14px;
+}
+
+.statusTrack {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.statusDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #e1e1e1;
+  box-shadow: 0 0 0 0 rgba(123, 75, 255, 0.2);
+  animation: pulse 1.4s infinite;
+}
+
+.statusText {
+  font-size: 13px;
+  color: #4b4b57;
+}
+
+.uploading {
+  background: #fdba13;
+}
+
+.success {
+  background: #1c8c4a;
+}
+
+.error {
+  background: #e35f5f;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(123, 75, 255, 0.2);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(123, 75, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(123, 75, 255, 0);
+  }
+}

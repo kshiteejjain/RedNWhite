@@ -1,6 +1,31 @@
 import "@/styles/globals.css";
+import "react-toastify/dist/ReactToastify.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { ToastContainer } from "react-toastify";
+import { getSession } from "@/utils/authSession";
+
+function AuthGuard({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    const publicRoutes = ["/login", "/register"];
+    const path = router.pathname;
+    const isPublic = publicRoutes.some(
+      (route) => path === route || path.startsWith(`${route}/`)
+    );
+    const sessionUser = getSession();
+
+    if (!sessionUser && !isPublic) {
+      router.replace("/login");
+    }
+  }, [router]);
+
+  return <>{children}</>;
+}
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -22,7 +47,10 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="theme-color" content="#8f0500" />
       </Head>
 
-      <Component {...pageProps} />
+      <AuthGuard>
+        <Component {...pageProps} />
+      </AuthGuard>
+      <ToastContainer position="bottom-center" autoClose={3000} pauseOnHover theme="dark" />
     </>
   );
 }

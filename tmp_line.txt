@@ -1,0 +1,1 @@
+                        {project.source === "ai" ? "✨" : "A"}

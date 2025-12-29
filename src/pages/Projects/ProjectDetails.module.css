@@ -1,0 +1,377 @@
+.page {
+  padding: 28px 32px 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background: linear-gradient(180deg, #f8f7ff 0%, #ffffff 100%);
+  min-height: 100vh;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #7a7a89;
+}
+
+.backLink {
+  color: #7a3fe1;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.heroArea {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 18px;
+}
+
+.heroCard {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 22px 24px;
+  border: 1px solid #efe5ff;
+  box-shadow: 0 12px 30px rgba(80, 58, 180, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tagRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tagPrimary {
+  background: #f1ecff;
+  color: #5a36d6;
+}
+
+.tagNeutral {
+  background: #eef6ff;
+  color: #1f74d3;
+}
+.heroHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.heroTitle {
+  font-size: 30px;
+  font-weight: 800;
+  color: #1f1f2f;
+  margin-bottom: 6px;
+}
+
+.heroSubtitle {
+  font-size: 14px;
+  color: #4b4b57;
+  line-height: 1.6;
+  max-width: 880px;
+}
+.heroMeta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.metric {
+  background: #f8f7ff;
+  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid #ece8ff;
+}
+
+.metric span {
+  font-size: 11px;
+  color: #6a6a7a;
+  letter-spacing: 0.1px;
+}
+
+.metric strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 14px;
+  color: #1f1f2f;
+}
+
+.participantMetric {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.participantLabelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.avatarStackWide {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.statusCard {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 18px;
+  border: 1px solid #efe5ff;
+  box-shadow: 0 12px 30px rgba(80, 58, 180, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.statusHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.statusLabel {
+  font-size: 13px;
+  color: #4b4b57;
+  font-weight: 700;
+}
+
+.statusBadgeRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.statusBadge {
+  font-size: 11px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: #e9e3ff;
+  color: #5a36d6;
+  font-weight: 700;
+}
+
+.statusBadgeMuted {
+  font-size: 11px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: #f3f3f6;
+  color: #6a6a7a;
+  font-weight: 700;
+}
+
+.statusPlanning {
+  background: #f8f1ff;
+  color: #8a3ad9;
+}
+
+.statusInProgress {
+  background: #e9f3ff;
+  color: #1f74d3;
+}
+
+.statusReview {
+  background: #fff4e6;
+  color: #cf711f;
+}
+
+.statusBacklog {
+  background: #fff1db;
+  color: #a86a00;
+}
+
+.statusComplete {
+  background: #e9f8f0;
+  color: #1c8c4a;
+}
+
+.progressWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.progressHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #4b4b57;
+  font-weight: 700;
+}
+
+.metricGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.detailCard {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 18px;
+  border: 1px solid #efe5ff;
+  box-shadow: 0 10px 26px rgba(80, 58, 180, 0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.detailTitle {
+  font-size: 16px;
+  font-weight: 800;
+  color: #1f1f2f;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  color: #333344;
+  background: #f9f8ff;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #f0ecff;
+}
+
+.detailRow span {
+  color: #6a6a7a;
+}
+
+.chipGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  background: #f1ecff;
+  color: #5a36d6;
+  font-size: 11px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  font-weight: 700;
+  border: 1px solid #e3d9ff;
+}
+
+.chipMuted {
+  background: #f3f3f6;
+  color: #7a7a89;
+  font-size: 11px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  border: 1px dashed #e0dfea;
+}
+
+.note {
+  font-size: 12px;
+  color: #6a6a7a;
+  line-height: 1.6;
+  margin-top: 4px;
+}
+
+.secondaryButton {
+  align-self: flex-start;
+  background: #f1ecff;
+  color: #5a36d6;
+  border: 1px solid #e3d9ff;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.secondaryButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.secondaryButton:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(90, 54, 214, 0.16);
+}
+
+.emptyState {
+  padding: 40px 24px;
+  text-align: center;
+  border: 1px dashed #d8d2c6;
+  border-radius: 16px;
+  background: #fffaf1;
+}
+
+.emptyState h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #1f1f1f;
+}
+
+.emptyState p {
+  color: #6a6a6a;
+  margin-bottom: 16px;
+}
+
+.emptyState a {
+  color: #fff;
+  background: #8f0500;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (max-width: 1080px) {
+  .heroArea {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .page {
+    padding: 20px;
+  }
+
+  .heroHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .heroTitle {
+    font-size: 24px;
+  }
+
+  .metricGrid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+}

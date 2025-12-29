@@ -73,6 +73,18 @@
   color: #0070f3;
 }
 
+.menuRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.menuIcon {
+  font-size: 1rem;
+  width: 18px;
+  text-align: center;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

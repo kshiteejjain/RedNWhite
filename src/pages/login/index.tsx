@@ -1,24 +1,70 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import { getSession, saveSession } from "@/utils/authSession";
 import styles from "./Login.module.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
-   const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    const existingSession = getSession();
+    if (existingSession) {
+      router.replace("/Dashboard");
+    }
+  }, [router]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login attempt:", { email, password });
+    setIsSubmitting(true);
 
-    // On successful login, redirect to dashboard
-    if (email && password) {
+    try {
+      const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
+      const response = await fetch(`${apiBaseUrl}/api/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => ({}));
+        const message =
+          (errorBody as { message?: string }).message ??
+          "Invalid email or password.";
+        toast.error(message);
+        return;
+      }
+
+      const result = (await response.json()) as {
+        message?: string;
+        user?: { name?: string; role?: string; email?: string; userId?: string };
+      };
+
+      const authenticatedUser = {
+        ...result.user,
+        email: result.user?.email ?? email,
+      };
+      saveSession(authenticatedUser);
+
+      const name = authenticatedUser?.name ?? "";
+      toast.success(
+        name
+          ? `Welcome back, ${name}!`
+          : result.message ?? "Login successful."
+      );
       router.push("/Dashboard");
+    } catch (error) {
+      console.error("Failed to login via API", error);
+      toast.error("Could not login right now. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleCreateAccount = () => {
-    // Redirect to registration page when "Create Account" is clicked
     router.push("/register");
   };
 
@@ -29,7 +75,8 @@ export default function Login() {
         <div className="overlay">
           <h1 className={styles.brand}>Red and White</h1>
           <p className={styles.tagline}>
-            Learn like top IITians & achieve Professional Jobs <br /> Trusted by 1500+ Placement Partners
+            Learn like top IITians & achieve Professional Jobs <br /> Trusted by
+            1500+ Placement Partners
           </p>
         </div>
       </div>
@@ -51,6 +98,7 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
+                required
               />
             </div>
 
@@ -61,28 +109,38 @@ export default function Login() {
                 className="form-control"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder="Enter your password"
+                required
               />
             </div>
 
-            <button type="submit" className="btn-primary">
-              🔐 Sign In
+            <button type="submit" className="btn-primary" disabled={isSubmitting}>
+              {isSubmitting ? "Signing In..." : "Sign In"}
             </button>
-
           </form>
 
           <div className={styles.divider}>
             <span>New to Red and White?</span>
           </div>
 
-          <button className={styles.createAccountButton} onClick={handleCreateAccount}>
-            ✨ Create Account
+          <button
+            className={styles.createAccountButton}
+            onClick={handleCreateAccount}
+            disabled={isSubmitting}
+          >
+            Create Account
           </button>
 
           <p className={styles.terms}>
             By continuing, you agree to our{" "}
-            <a href="#" className={styles.link}>Terms of Service</a> and{" "}
-            <a href="#" className={styles.link}>Privacy Policy</a>.
+            <a href="#" className={styles.link}>
+              Terms of Service
+            </a>{" "}
+            and{" "}
+            <a href="#" className={styles.link}>
+              Privacy Policy
+            </a>
+            .
           </p>
         </div>
       </div>

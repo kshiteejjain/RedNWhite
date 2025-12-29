@@ -1,9 +1,0 @@
-.add-project {
-  padding: 30px;
-}
-.add-project form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 500px;
-}

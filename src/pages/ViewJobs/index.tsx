@@ -1,11 +1,11 @@
 import Layout from "@/components/Layout/Layout";
 import Table from "@/components/Table/Table";
 import styles from "./ViewJobs.module.css";
+import headerStyles from "../Projects/AddProject.module.css";
 
 export default function ViewJobs() {
   const headers = ["Job Title", "Date Posted", "Platform", "Status", "Action"];
 
-  // Generate 50 jobs dynamically
   const jobs = Array.from({ length: 50 }, (_, i) => {
     const platforms = ["LinkedIn", "Indeed", "Naukri", "Glassdoor", "Internshala"];
     const statuses = ["Active", "Pending", "Completed"];
@@ -26,9 +26,18 @@ export default function ViewJobs() {
 
   return (
     <Layout>
+      <section className={headerStyles.header}>
+        <div>
+          <h2 className={headerStyles.title}>Explore roles and applications</h2>
+          <p className={headerStyles.subtitle}>
+            Review openings and keep tabs on every application you are tracking.
+          </p>
+        </div>
+      </section>
+
       <Table headers={headers} data={jobs} />
       <div className={styles.jobInfo}>
-        <p>💼 Total {jobs.length} Jobs, Showing 10 jobs per page</p>
+        <p>dY'Ź Total {jobs.length} Jobs, Showing 10 jobs per page</p>
       </div>
     </Layout>
   );
