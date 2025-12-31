@@ -1,9 +1,9 @@
 .sidebar {
-  background: #fff;
+  background: var(--color-fff);
   width: 260px;
   height: 100vh;
-  border-right: 1px solid #e5e7eb;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.03);
+  border-right: 1px solid var(--color-e5e7eb);
+  box-shadow: 2px 0 8px var(--color-rgba-0-0-0-003);
   padding: 0 15px;
   position: fixed;
   top: 0;
@@ -26,24 +26,24 @@
 
 .sidebar li:hover,
 .sidebar li.active {
-  background: #8f0500;
+  background: var(--color-8f0500);
   transform: translateX(3px);
 }
 
 .sidebar a {
   text-decoration: none;
-  color: #333;
+  color: var(--color-333);
   font-weight: 500;
   display: block;
   padding: 18px 15px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--color-e5e7eb);
   font-size: 15px;
   transition: color 0.2s ease;
 }
 
 .sidebar li:hover a,
 .sidebar li.active a {
-  color: #fff;
+  color: var(--color-fff);
 }
 
 /* Scrollbar */
@@ -52,7 +52,7 @@
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-  background-color: #d1d5db;
+  background-color: var(--color-d1d5db);
   border-radius: 10px;
 }
 
@@ -62,12 +62,12 @@
   box-sizing: border-box;
   margin: 0;
   padding: 10px 20px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--color-e5e7eb);
 }
 
 /* Active fix cleanup */
 .sidebar a.active {
-  background: #8f0500;
-  color: #fff;
-  font-weight: 600;
+  background: var(--color-8f0500);
+  color: var(--color-fff);
+  font-weight: 500;
 }

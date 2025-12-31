@@ -3,27 +3,59 @@ import Layout from "@/components/Layout/Layout";
 import ChartCard from "@/components/ChartCard/ChartCard";
 import Table from "@/components/Table/Table";
 import { type Project, normalizeProject } from "@/utils/projectData";
+import { getSession } from "@/utils/authSession";
 import styles from "./Dashboard.module.css";
 
-type StatusKey = "completed" | "active" | "Backlog" | "unknown";
+type StatusKey = "completed" | "inprogress" | "backlog";
+type Member = {
+  id: string;
+  name?: string;
+  email?: string;
+  role?: string;
+  mobileNumber?: string;
+  courseName?: string;
+  courseDuration?: string;
+  courseStartDate?: string;
+  createdAt?: string;
+  subject?: string;
+  status?: string;
+  userId?: string;
+};
 
 const statusToKey = (status?: string): StatusKey => {
   const value = status?.toLowerCase() ?? "";
   if (value.includes("complete")) return "completed";
-  if (value.includes("active") || value.includes("progress")) return "active";
-  if (value.includes("bending") || value.includes("backlog")) return "Backlog";
-  return "unknown";
+  if (value.includes("active") || value.includes("progress")) return "inprogress";
+  return "backlog";
 };
 
 export default function Dashboard() {
   const headers = ["Project", "Category", "Status", "Progress"];
+  const memberHeaders = [
+    "Name",
+    "Email",
+    "Role",
+    "Mobile Number",
+    "Course Name",
+    "Course Duration",
+    "Course Start Date",
+    "Created At",
+    "Subject",
+    "User ID",
+  ];
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [userCount, setUserCount] = useState<number>(0);
   const [loadingProjects, setLoadingProjects] = useState(true);
   const [loadingUsers, setLoadingUsers] = useState(true);
+  const [activeMembers, setActiveMembers] = useState<Member[]>([]);
+  const [loadingMembers, setLoadingMembers] = useState(true);
+  const [userRole, setUserRole] = useState<string | null>(null);
 
   useEffect(() => {
+    const session = getSession();
+    setUserRole(session?.role ?? null);
+
     const fetchProjects = async () => {
       try {
         const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
@@ -53,8 +85,28 @@ export default function Dashboard() {
       }
     };
 
+    const fetchMembers = async (role?: string) => {
+      if ((role ?? "").toLowerCase() !== "faculty") {
+        setLoadingMembers(false);
+        return;
+      }
+      try {
+        const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
+        const response = await fetch(`${apiBaseUrl}/api/activeMembers`);
+        if (!response.ok) throw new Error("Failed to load members");
+        const result = (await response.json()) as { members?: Member[] };
+        setActiveMembers(result.members ?? []);
+      } catch (error) {
+        console.error("Dashboard active members fetch failed", error);
+      } finally {
+        setLoadingMembers(false);
+      }
+    };
+
+    const roleValue = session?.role ?? "";
     void fetchProjects();
     void fetchUsers();
+    void fetchMembers(roleValue);
   }, []);
 
   const completedProjects = useMemo(
@@ -94,25 +146,19 @@ export default function Dashboard() {
   const pieData = useMemo(() => {
     const counts: Record<StatusKey, number> = {
       completed: 0,
-      active: 0,
+      inprogress: 0,
       backlog: 0,
-      unknown: 0,
     };
     projects.forEach((p) => {
       counts[statusToKey(p.status)] += 1;
     });
 
     return {
-      labels: ["Completed", "Active", "Backlog", "Unknown"],
+      labels: ["Completed", "In Progress", "Backlog"],
       datasets: [
         {
-          data: [
-            counts.completed,
-            counts.active,
-            counts.backlog,
-            counts.unknown,
-          ],
-          backgroundColor: ["#22c55e", "#facc15", "#ef4444", "#94a3b8"],
+          data: [counts.completed, counts.inprogress, counts.backlog],
+          backgroundColor: ["#22c55e", "#facc15", "#ef4444"],
           borderWidth: 2,
         },
       ],
@@ -135,11 +181,21 @@ export default function Dashboard() {
       .map((project) => {
         const progressValue = project.progress ?? 0;
         const statusText = project.status ?? "backlog";
+        const statusClass = statusText.toLowerCase().includes("complete")
+          ? styles.completed
+          : statusText.toLowerCase().includes("active")
+          ? styles.active
+          : styles.pending;
         return {
           Project: project.name ?? "Untitled",
           Category: (
             <span className={badgeClass(project.category)}>
               {project.category || "Uncategorized"}
+            </span>
+          ),
+          Status: (
+            <span className={`${styles.status} ${statusClass}`}>
+              {statusText}
             </span>
           ),
           statusText,
@@ -167,6 +223,24 @@ export default function Dashboard() {
       });
   }, [projects]);
 
+  const activeMemberRows = useMemo(() => {
+    return activeMembers.map((member) => {
+      return {
+        Name: member.name ?? "Member",
+        Email: member.email ?? "-",
+        Role: member.role ?? "-",
+        "Mobile Number": member.mobileNumber ?? "-",
+        "Course Name": member.courseName ?? "-",
+        "Course Duration": member.courseDuration ?? "-",
+        "Course Start Date": member.courseStartDate ?? "-",
+        "Created At": member.createdAt ?? "-",
+        Subject: member.subject ?? "-",
+        "User ID": member.userId ?? member.id,
+        statusText: member.status ?? "Active",
+      };
+    });
+  }, [activeMembers]);
+
   return (
     <Layout>
       <div className={styles.dashboard}>
@@ -193,7 +267,7 @@ export default function Dashboard() {
                 ? "…"
                 : Math.max(projects.length - completedProjects, 0)}
             </h2>
-            <p className={styles.redText}>Remaining to complete</p>
+            <p className={styles.redText}>Action Required</p>
           </div>
         </div>
 
@@ -202,9 +276,28 @@ export default function Dashboard() {
           <ChartCard title="Project Status Distribution" type="pie" data={pieData} />
         </div>
 
-        <div className={styles.tableSection}>
-          <h2>Recent Projects</h2>
-          <Table headers={headers} data={recentRows} />
+        <div className={styles.tableStack}>
+          <div className={styles.tableSection}>
+            <h2>Recent Projects</h2>
+            <Table headers={headers} data={recentRows} />
+          </div>
+
+          {userRole?.toLowerCase() === "faculty" && (
+            <div className={styles.tableSection}>
+              <h2>Active Members</h2>
+              {loadingMembers ? (
+                <p className={styles.loadingText}>Loading active members...</p>
+              ) : activeMemberRows.length === 0 ? (
+                <p className={styles.loadingText}>No active members found.</p>
+              ) : (
+                <Table
+                  headers={memberHeaders}
+                  data={activeMemberRows}
+                  enableStatusFilter={false}
+                />
+              )}
+            </div>
+          )}
         </div>
       </div>
     </Layout>

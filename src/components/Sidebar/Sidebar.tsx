@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useEffect, useMemo, useState } from "react";
+import { getSession } from "@/utils/authSession";
 import styles from "./Sidebar.module.css";
 
 const menuItems = [
@@ -21,6 +23,21 @@ const menuItems = [
 export default function Sidebar() {
   const router = useRouter();
   const currentPath = router.pathname;
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    const session = getSession();
+    setUserRole(session?.role ?? null);
+  }, []);
+
+  const visibleItems = useMemo(
+    () =>
+      menuItems.filter(
+        (item) =>
+          item.name !== "Upload" || (userRole ?? "").toLowerCase() === "faculty"
+      ),
+    [userRole]
+  );
 
   return (
     <aside className={styles.sidebar}>
@@ -29,7 +46,7 @@ export default function Sidebar() {
       </div>
 
       <ul className={styles.menuList}>
-        {menuItems.map((item) => {
+        {visibleItems.map((item) => {
           const isProjects =
             item.path === "/Projects" &&
             (currentPath === "/Projects" || currentPath.startsWith("/Projects/"));

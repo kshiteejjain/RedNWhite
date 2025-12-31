@@ -98,11 +98,13 @@ const computeDeadlineFromDuration = (
 export default function Projects() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAiPrefill, setIsAiPrefill] = useState(false);
   const [formState, setFormState] = useState<FormState>(() =>
     createRecordFromSchema(projectFormSchema)
   );
   const [techInput, setTechInput] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [aiLoading, setAiLoading] = useState(false);
   const todayString = useMemo(() => formatDate(new Date()), []);
 
   useEffect(() => {
@@ -179,30 +181,44 @@ export default function Projects() {
     event.preventDefault();
     const today = new Date();
     const start = normalizeDate(formState.startDate, today);
-    const duration =
-      Number(formState.durationDays) > 0 ? Number(formState.durationDays) : 30;
+    const duration = Number(formState.durationDays);
+
+    const name = formState.name.trim();
+    const category = formState.category.trim();
+    const description = formState.description.trim();
+    const budget = formState.budget.trim();
+    const techStack = formState.techStack;
+
+    if (!name || !category || !description || !budget || !formState.startDate || !duration || duration <= 0) {
+      toast.error("All fields are required, including a positive duration.");
+      return;
+    }
+
+    if (!techStack || techStack.length === 0) {
+      toast.error("Add at least one tech in the stack.");
+      return;
+    }
+
     const deadlineDate = normalizeDate(computedDeadline, start);
 
     const sessionUser = getSession();
     const ownerName = sessionUser?.name || "Project Owner";
 
     const projectPayload = {
-      name: formState.name.trim() || "Untitled Project",
-      category: formState.category.trim() || "General",
-      description:
-        formState.description.trim() ||
-        "Project scope and milestones are being defined.",
+      name,
+      category,
+      description,
       startDate: formatDate(start),
       deadline: formatDate(deadlineDate),
       participants: [],
       progress: 0,
-      techStack: formState.techStack,
+      techStack,
       status: "backlog",
       durationDays: duration,
       owner: ownerName,
       ownerId: sessionUser?.userId,
-      budget: formState.budget.trim() || "TBD",
-      source: "custom" as const,
+      budget,
+      source: isAiPrefill ? ("ai" as const) : ("custom" as const),
       createdAt: new Date().toISOString(),
     };
 
@@ -236,54 +252,65 @@ export default function Projects() {
     void saveProject();
   };
 
-  const handleAIGenerate = () => {
-    const template =
-      aiQueue[Math.floor(Math.random() * aiProjectTemplates.length)];
-    const durationDays = template.durationDays || 30;
-    const computedDeadline = computeDeadlineFromDuration(
-      template.startDate,
-      durationDays
-    );
-    const sessionUser = getSession();
-    const ownerName = sessionUser?.name || template.owner || "Project Owner";
-    const payload = {
-      ...template,
-      participants: [],
-      progress: 0,
-      durationDays,
-      deadline: computedDeadline,
-      owner: ownerName,
-      ownerId: sessionUser?.userId,
-      status: "backlog" as const,
-      source: "ai" as const,
-      createdAt: new Date().toISOString(),
-    };
+  const handleAIGenerate = async () => {
+    setAiLoading(true);
+    const recentProjects = projects.slice(0, 3).map((p) => ({
+      name: p.name,
+      category: p.category,
+      techStack: p.techStack,
+      description: p.description,
+    }));
 
-    const saveAiProject = async () => {
-      try {
-        const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
-        const response = await fetch(`${apiBaseUrl}/api/projects`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        if (!response.ok) {
-          const errorBody = await response.json().catch(() => ({}));
-          throw new Error(
-            (errorBody as { message?: string }).message ??
-            "Failed to generate AI project"
-          );
-        }
-        const created = (await response.json()) as Project;
-        setProjects((prev) => [normalizeProject(created, created.id), ...prev]);
-        toast.success("AI project added");
-      } catch (error) {
-        console.error("Failed to generate AI project", error);
-        toast.error("Could not generate AI project right now.");
+    try {
+      const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
+      const response = await fetch(`${apiBaseUrl}/api/generateProject`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ recentProjects }),
+      });
+
+      if (!response.ok) {
+        throw new Error(
+          (await response.json().catch(() => ({}))).message ??
+            "Failed to generate project"
+        );
       }
-    };
 
-    void saveAiProject();
+      const generated = (await response.json()) as {
+        name?: string;
+        category?: string;
+        description?: string;
+        durationDays?: number;
+        techStack?: string[];
+        budget?: string;
+      };
+
+      const durationDays = generated.durationDays || 30;
+      const start = formatDate(new Date());
+
+      setFormState((prev) => ({
+        ...prev,
+        name: generated.name || prev.name,
+        durationDays: String(durationDays),
+        category: generated.category || prev.category,
+        techStack: generated.techStack ?? [],
+        description:
+          generated.description ||
+          "Project scope and milestones are being defined.",
+        startDate: start,
+        budget: generated.budget || "TBD",
+      }));
+      setTechInput("");
+      setIsAiPrefill(true);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error("Failed to generate AI project", error);
+      toast.error(
+        error instanceof Error ? error.message : "Could not generate project."
+      );
+    } finally {
+      setAiLoading(false);
+    }
   };
 
   return (
@@ -300,7 +327,12 @@ export default function Projects() {
             <button
               type="button"
               className={styles.primaryAction}
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => {
+                setIsAiPrefill(false);
+                setFormState(createRecordFromSchema(projectFormSchema));
+                setTechInput("");
+                setIsModalOpen(true);
+              }}
             >
               Add Project
             </button>
@@ -308,8 +340,9 @@ export default function Projects() {
               type="button"
               className={styles.secondaryAction}
               onClick={handleAIGenerate}
+              disabled={aiLoading}
             >
-              AI Generate Project
+              {aiLoading ? "Generating..." : "AI Generate Project"}
             </button>
           </div>
         </section>
@@ -376,11 +409,11 @@ export default function Projects() {
 
                   <div className={styles.cardMeta}>
                     <div>
-                      <span>Start</span>
+                      <span>🗓️ Start</span>
                       <strong>{project.startDate}</strong>
                     </div>
                     <div>
-                      <span>🏁 Deadline</span>
+                      <span>🗓️ Deadline</span>
                       <strong>{project.deadline}</strong>
                     </div>
                     <div className={styles.participantsMeta}>
@@ -462,6 +495,7 @@ export default function Projects() {
                     placeholder="Enter project name"
                     value={formState.name}
                     onChange={handleChange}
+                    required
                   />
                 </div>
 
@@ -475,6 +509,7 @@ export default function Projects() {
                     value={formState.durationDays}
                     onChange={handleChange}
                     min={1}
+                    required
                   />
                 </div>
 
@@ -485,6 +520,7 @@ export default function Projects() {
                     className="form-control"
                     value={formState.category}
                     onChange={handleChange}
+                    required
                   >
                     <option value="">Select category</option>
                     {categoryOptions.map((option) => (
@@ -494,7 +530,7 @@ export default function Projects() {
                 </div>
 
                 <div className="form-group">
-                  <label>📅 Start Date</label>
+                  <label>Start Date</label>
                   <input
                     type="date"
                     name="startDate"
@@ -502,6 +538,7 @@ export default function Projects() {
                     value={formState.startDate}
                     min={todayString}
                     onChange={handleChange}
+                    required
                   />
                   {computedDeadline ? (
                     <p className={styles.helperText}>
@@ -523,7 +560,11 @@ export default function Projects() {
                     placeholder="e.g. $18k"
                     value={formState.budget}
                     onChange={handleChange}
+                    required
                   />
+                  <p className={styles.helperText}>
+                     Enter numbers only - $ and k are added automatically.
+                    </p>
                 </div>
 
                 <div className="form-group">
@@ -587,9 +628,10 @@ export default function Projects() {
                   className="form-control"
                   name="description"
                   placeholder="Describe your project idea"
-                  rows={3}
+                  rows={8}
                   value={formState.description}
                   onChange={handleChange}
+                  required
                 />
               </div>
 

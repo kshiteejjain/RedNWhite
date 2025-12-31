@@ -1,8 +1,8 @@
 .dashboard {
   padding: 25px 30px;
-  background: #f9fafb;
+  background: var(--color-f9fafb);
   min-height: 100vh;
-  color: #1f2937;
+  color: var(--color-1f2937);
 }
 
 /* Cards */
@@ -14,11 +14,11 @@
 }
 
 .card {
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--color-fff);
+  border: 1px solid var(--color-e5e7eb);
   border-radius: 12px;
   padding: 18px 20px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 4px var(--color-rgba-0-0-0-004);
   transition: transform 0.2s ease;
 }
 
@@ -27,23 +27,23 @@
 }
 
 .card h3 {
-  color: #6b7280;
+  color: var(--color-6b7280);
   font-size: 0.9rem;
 }
 
 .card h2 {
   margin: 5px 0;
   font-size: 1.7rem;
-  color: #111827;
+  color: var(--color-111827);
 }
 
 .greenText {
-  color: #16a34a;
+  color: var(--color-16a34a);
   font-size: 0.85rem;
 }
 
 .redText {
-  color: #dc2626;
+  color: var(--color-dc2626);
   font-size: 0.85rem;
 }
 
@@ -56,18 +56,23 @@
 }
 /* Table */
 .tableSection {
-  background: #fff;
+  background: var(--color-fff);
   border-radius: 12px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-e5e7eb);
   padding: 20px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 4px var(--color-rgba-0-0-0-004);
 }
 
 .tableSection h2 {
   margin-bottom: 15px;
-  color: #111827;
+  color: var(--color-111827);
   font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: 500;
+}
+
+.tableStack {
+  display: grid;
+  gap: 20px;
 }
 
 .table {
@@ -79,16 +84,16 @@
 .table td {
   padding: 12px 10px;
   text-align: left;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--color-f3f4f6);
 }
 
 .table th {
-  color: #6b7280;
-  font-weight: 600;
+  color: var(--color-6b7280);
+  font-weight: 500;
 }
 
 .table tr:hover {
-  background: #f9fafb;
+  background: var(--color-f9fafb);
 }
 
 .badge {
@@ -96,31 +101,31 @@
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: 500;
-  color: #fff;
+  color: var(--color-fff);
 }
 
 .edtech {
-  background: #2563eb;
+  background: var(--color-2563eb);
 }
 
 .fintech {
-  background: #10b981;
+  background: var(--color-10b981);
 }
 
 .social {
-  background: #ef4444;
+  background: var(--color-ef4444);
 }
 
 .healthtech {
-  background: #8b5cf6;
+  background: var(--color-8b5cf6);
 }
 
 .ai {
-  background: #0ea5e9;
+  background: var(--color-0ea5e9);
 }
 
 .defaultBadge {
-  background: #6b7280;
+  background: var(--color-6b7280);
 }
 
 /* Status Pills */
@@ -132,18 +137,18 @@
 }
 
 .completed {
-  background: #dcfce7;
-  color: #166534;
+  background: var(--color-dcfce7);
+  color: var(--color-166534);
 }
 
 .active {
-  background: #fef9c3;
-  color: #92400e;
+  background: var(--color-fef9c3);
+  color: var(--color-92400e);
 }
 
 .pending {
-  background: #fee2e2;
-  color: #b91c1c;
+  background: var(--color-fee2e2);
+  color: var(--color-b91c1c);
 }
 
 /* Progress Bar */
@@ -156,14 +161,19 @@
 .progressBar {
   height: 8px;
   width: 100px;
-  background: #f3f4f6;
+  background: var(--color-f3f4f6);
   border-radius: 10px;
   overflow: hidden;
 }
 
 .progressBar div {
   height: 100%;
-  background: #3b82f6;
+  background: var(--color-3b82f6);
   border-radius: 10px;
   transition: width 0.4s ease;
+}
+
+.loadingText {
+  color: var(--color-6b7280);
+  font-size: 0.95rem;
 }

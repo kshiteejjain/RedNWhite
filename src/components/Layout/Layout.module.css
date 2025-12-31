@@ -5,7 +5,7 @@
 .main {
   margin-left: 260px;
   width: calc(100% - 260px);
-  background: #f8f9fa;
+  background: var(--color-f8f9fa);
 }
 .content {
   padding: 20px;

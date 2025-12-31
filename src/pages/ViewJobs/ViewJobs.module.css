@@ -1,6 +1,6 @@
 .view-jobs {
   padding: 20px;
-  background: #f8f9fa;
+  background: var(--color-f8f9fa);
 }
 .jobInfo{
   display: flex;

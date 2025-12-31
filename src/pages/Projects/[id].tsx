@@ -131,20 +131,7 @@ export default function ProjectDetails() {
             </p>
           </div>
           <div className={headerStyles.actions}>
-            <button
-              type="button"
-              className={headerStyles.primaryAction}
-              onClick={goAddProject}
-            >
-              Add Project
-            </button>
-            <button
-              type="button"
-              className={headerStyles.secondaryAction}
-              onClick={goAiGenerate}
-            >
-              AI Generate Project
-            </button>
+            
             <button
               type="button"
               className={headerStyles.secondaryAction}
@@ -207,7 +194,7 @@ export default function ProjectDetails() {
 
               <div className={styles.statusCard}>
                 <div className={styles.statusHeader}>
-                  <div>
+                  <>
                     <p className={styles.statusLabel}>Status</p>
                     <div className={styles.statusBadgeRow}>
                       {project.status ? (
@@ -220,7 +207,7 @@ export default function ProjectDetails() {
                         </span>
                       )}
                     </div>
-                  </div>
+                  </>
                 </div>
 
                 <div className={styles.progressWrap}>
@@ -233,11 +220,11 @@ export default function ProjectDetails() {
 
                 <div className={styles.metricGrid}>
                   <div className={styles.metric}>
-                    <span>Start</span>
+                    <span>🗓️ Start</span>
                     <strong>{project.startDate}</strong>
                   </div>
                   <div className={styles.metric}>
-                    <span>Deadline</span>
+                    <span>🗓️ Deadline</span>
                     <strong>{project.deadline}</strong>
                   </div>
                   <div className={styles.metric}>

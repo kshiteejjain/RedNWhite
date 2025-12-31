@@ -45,12 +45,6 @@ export default function Navbar() {
                 </span>
                 <span>Profile</span>
               </li>
-              <li className={styles.menuRow}>
-                <span className={styles.menuIcon} aria-hidden="true">
-                  ⚙️
-                </span>
-                <span>Settings</span>
-              </li>
               <li
                 className={styles.menuRow}
                 onClick={() => {
@@ -60,7 +54,7 @@ export default function Navbar() {
                 }}
               >
                 <span className={styles.menuIcon} aria-hidden="true">
-                  🚪
+                  🔓  
                 </span>
                 <span>Logout</span>
               </li>

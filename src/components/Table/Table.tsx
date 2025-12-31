@@ -1,18 +1,43 @@
-import { useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import styles from "./Table.module.css";
 
 interface TableProps {
   headers: string[];
   data: any[];
+  enableStatusFilter?: boolean;
 }
 
-export default function Table({ headers, data }: TableProps) {
+export default function Table({
+  headers,
+  data,
+  enableStatusFilter = true,
+}: TableProps) {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState("All");
+  const [sortKey, setSortKey] = useState<string | null>(null);
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
   const perPage = 10;
 
+  const getComparableValue = (row: any, header: string) => {
+    const value = row[header] ?? row[header.toLowerCase()];
+    if (typeof value === "number") return value;
+    if (typeof value === "string") return value.toLowerCase();
+    return String(value ?? "");
+  };
+
+  const handleSort = (header: string) => {
+    setPage(1);
+    if (sortKey === header) {
+      setSortDir(sortDir === "asc" ? "desc" : "asc");
+    } else {
+      setSortKey(header);
+      setSortDir("asc");
+    }
+  };
+
   const filtered = useMemo(() => {
+    const effectiveFilter = enableStatusFilter ? filter : "All";
     return data.filter((row) => {
       const matchSearch = Object.values(row)
         .join(" ")
@@ -25,14 +50,37 @@ export default function Table({ headers, data }: TableProps) {
           ? row.Status
           : "";
       const matchFilter =
-        filter === "All" ||
-        statusValue.toLowerCase() === filter.toLowerCase();
+        effectiveFilter === "All" ||
+        statusValue.toLowerCase() === effectiveFilter.toLowerCase();
       return matchSearch && matchFilter;
     });
-  }, [data, search, filter]);
+  }, [data, search, filter, enableStatusFilter]);
 
-  const paginated = filtered.slice((page - 1) * perPage, page * perPage);
-  const totalPages = Math.ceil(filtered.length / perPage);
+  const sorted = useMemo(() => {
+    if (!sortKey) return filtered;
+    const sortedRows = [...filtered].sort((a, b) => {
+      const aVal = getComparableValue(a, sortKey);
+      const bVal = getComparableValue(b, sortKey);
+      if (aVal < bVal) return sortDir === "asc" ? -1 : 1;
+      if (aVal > bVal) return sortDir === "asc" ? 1 : -1;
+      return 0;
+    });
+    return sortedRows;
+  }, [filtered, sortKey, sortDir]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
+  const paginated = sorted.slice((page - 1) * perPage, page * perPage);
+
+  useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [page, totalPages]);
+
+  const pageNumbers = useMemo(
+    () => Array.from({ length: totalPages }, (_, i) => i + 1),
+    [totalPages]
+  );
 
   return (
     <div className={styles.wrapper}>
@@ -43,20 +91,33 @@ export default function Table({ headers, data }: TableProps) {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <select
-          className={styles.select}
-          onChange={(e) => setFilter(e.target.value)}
-        >
-          <option>All</option>
-          <option>Active</option>
-          <option>Completed</option>
-          <option>Backlog</option>
-        </select>
+        {enableStatusFilter && (
+          <select
+            className={styles.select}
+            onChange={(e) => setFilter(e.target.value)}
+          >
+            <option>All</option>
+            <option>Active</option>
+            <option>Completed</option>
+            <option>Backlog</option>
+          </select>
+        )}
       </div>
 
       <table className={styles.table}>
         <thead>
-          <tr className={styles.tr}>{headers.map((h) => <th className={styles.th} key={h}>{h}</th>)}</tr>
+          <tr className={styles.tr}>
+            {headers.map((h) => (
+              <th
+                className={`${styles.th} ${styles.sortable}`}
+                key={h}
+                onClick={() => handleSort(h)}
+              >
+                {h}
+                {sortKey === h ? (sortDir === "asc" ? " ^" : " v") : ""}
+              </th>
+            ))}
+          </tr>
         </thead>
         <tbody>
           {paginated.map((row, i) => (
@@ -72,18 +133,33 @@ export default function Table({ headers, data }: TableProps) {
       </table>
 
       <div className={styles.pagination}>
-        <button disabled={page === 1} onClick={() => setPage(page - 1)}>
-          ◀
-        </button>
-        <span>
-          Page {page} / {totalPages || 1}
-        </span>
         <button
-        className="button"
-          disabled={page === totalPages}
-          onClick={() => setPage(page + 1)}
+          type="button"
+          className={styles.pageButton}
+          disabled={page === 1}
+          onClick={() => setPage(Math.max(page - 1, 1))}
         >
-          ▶
+          Prev
+        </button>
+        {pageNumbers.map((num) => (
+          <button
+            type="button"
+            key={num}
+            className={`${styles.pageButton} ${
+              num === page ? styles.pageButtonActive : ""
+            }`}
+            onClick={() => setPage(num)}
+          >
+            {num}
+          </button>
+        ))}
+        <button
+          type="button"
+          className={styles.pageButton}
+          disabled={page === totalPages}
+          onClick={() => setPage(Math.min(page + 1, totalPages))}
+        >
+          Next
         </button>
       </div>
     </div>

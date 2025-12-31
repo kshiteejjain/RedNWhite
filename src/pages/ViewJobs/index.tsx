@@ -37,7 +37,7 @@ export default function ViewJobs() {
 
       <Table headers={headers} data={jobs} />
       <div className={styles.jobInfo}>
-        <p>dY'Ź Total {jobs.length} Jobs, Showing 10 jobs per page</p>
+        <p>Total {jobs.length} Jobs, Showing 10 jobs per page</p>
       </div>
     </Layout>
   );

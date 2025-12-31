@@ -40,16 +40,34 @@ export default function ChartCard({ title, type, data }: ChartCardProps) {
     // Destroy existing chart before creating a new one (to prevent memory leaks)
     if (chartInstance.current) chartInstance.current.destroy();
 
+    const baseOptions = {
+      plugins: {
+        legend: { display: type === "pie" },
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+    };
+
+    const barOptions =
+      type === "bar"
+        ? {
+            ...baseOptions,
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  stepSize: 1,
+                  precision: 0,
+                },
+              },
+            },
+          }
+        : baseOptions;
+
     chartInstance.current = new Chart(canvasRef.current, {
       type,
       data,
-      options: {
-        plugins: {
-          legend: { display: type === "pie" },
-        },
-        responsive: true,
-        maintainAspectRatio: false,
-      },
+      options: barOptions,
     });
   }, [data, type]);
 

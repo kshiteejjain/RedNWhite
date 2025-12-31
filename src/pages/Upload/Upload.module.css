@@ -3,10 +3,10 @@
 }
 
 .card {
-  background: #ffffff;
+  background: var(--color-ffffff);
   border-radius: 18px;
-  border: 1px solid #efe5ff;
-  box-shadow: 0 12px 28px rgba(80, 58, 180, 0.1);
+  border: 1px solid var(--color-efe5ff);
+  box-shadow: 0 12px 28px var(--color-rgba-80-58-180-01);
   padding: 22px 24px;
   display: flex;
   flex-direction: column;
@@ -24,12 +24,12 @@
   margin: 0;
   font-size: 22px;
   font-weight: 800;
-  color: #1f1f2f;
+  color: var(--color-1f1f2f);
 }
 
 .subtitle {
   margin: 0;
-  color: #4b4b57;
+  color: var(--color-4b4b57);
   font-size: 14px;
 }
 
@@ -39,19 +39,19 @@
   justify-content: center;
   gap: 8px;
   padding: 12px 16px;
-  background: linear-gradient(135deg, #7b4bff, #ff6fba);
-  color: #fff;
+  background: linear-gradient(135deg, var(--color-7b4bff), var(--color-ff6fba));
+  color: var(--color-fff);
   border-radius: 12px;
   font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 10px 24px rgba(123, 75, 255, 0.3);
+  box-shadow: 0 10px 24px var(--color-rgba-123-75-255-03);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   width: fit-content;
 }
 
 .uploadButton:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(123, 75, 255, 0.35);
+  box-shadow: 0 12px 28px var(--color-rgba-123-75-255-035);
 }
 
 .fileInput {
@@ -72,58 +72,58 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: #e1e1e1;
-  box-shadow: 0 0 0 0 rgba(123, 75, 255, 0.2);
+  background: var(--color-e1e1e1);
+  box-shadow: 0 0 0 0 var(--color-rgba-123-75-255-02);
   animation: pulse 1.4s infinite;
 }
 
 .statusText {
   font-size: 13px;
-  color: #4b4b57;
+  color: var(--color-4b4b57);
 }
 
 .uploading {
-  background: #fdba13;
+  background: var(--color-fdba13);
 }
 
 .success {
-  background: #1c8c4a;
+  background: var(--color-1c8c4a);
 }
 
 .error {
-  background: #e35f5f;
+  background: var(--color-e35f5f);
 }
 
 .parsing {
-  background: #fdba13;
+  background: var(--color-fdba13);
 }
 
 .ready {
-  background: #1c8c4a;
+  background: var(--color-1c8c4a);
 }
 
 .hint {
   font-size: 12px;
-  color: #4b4b57;
-  background: #f7f5ff;
-  border: 1px dashed #d4c9ff;
+  color: var(--color-4b4b57);
+  background: var(--color-f7f5ff);
+  border: 1px dashed var(--color-d4c9ff);
   border-radius: 10px;
   padding: 10px 12px;
 }
 
 .hint code {
-  background: #fff;
+  background: var(--color-fff);
   border-radius: 6px;
   padding: 2px 6px;
-  border: 1px solid #efe5ff;
+  border: 1px solid var(--color-efe5ff);
 }
 
 .previewCard {
   margin-top: 16px;
-  background: #ffffff;
+  background: var(--color-ffffff);
   border-radius: 18px;
-  border: 1px solid #efe5ff;
-  box-shadow: 0 12px 28px rgba(80, 58, 180, 0.08);
+  border: 1px solid var(--color-efe5ff);
+  box-shadow: 0 12px 28px var(--color-rgba-80-58-180-008);
   padding: 18px 20px;
   display: flex;
   flex-direction: column;
@@ -140,30 +140,30 @@
 .previewTitle {
   margin: 0;
   font-weight: 800;
-  color: #1f1f2f;
+  color: var(--color-1f1f2f);
 }
 
 .previewSubtitle {
   margin: 4px 0 0 0;
   font-size: 13px;
-  color: #4b4b57;
+  color: var(--color-4b4b57);
 }
 
 .submitButton {
-  background: linear-gradient(135deg, #2ad4a9, #5b8bff);
-  color: #fff;
+  background: linear-gradient(135deg, var(--color-2ad4a9), var(--color-5b8bff));
+  color: var(--color-fff);
   border: none;
   border-radius: 10px;
   padding: 10px 14px;
   font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 10px 24px rgba(91, 139, 255, 0.25);
+  box-shadow: 0 10px 24px var(--color-rgba-91-139-255-025);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .submitButton:hover {
   transform: translateY(-1px);
-  box-shadow: 0 12px 28px rgba(91, 139, 255, 0.3);
+  box-shadow: 0 12px 28px var(--color-rgba-91-139-255-03);
 }
 
 .submitButton:disabled {
@@ -175,7 +175,7 @@
 
 .previewList {
   overflow: auto;
-  border: 1px solid #efe5ff;
+  border: 1px solid var(--color-efe5ff);
   border-radius: 12px;
 }
 
@@ -187,24 +187,24 @@
 
 .previewTable th,
 .previewTable td {
-  border-bottom: 1px solid #f0eaff;
+  border-bottom: 1px solid var(--color-f0eaff);
   padding: 10px 12px;
   text-align: left;
   font-size: 13px;
 }
 
 .previewTable th {
-  background: #faf7ff;
+  background: var(--color-faf7ff);
   font-weight: 800;
-  color: #1f1f2f;
+  color: var(--color-1f1f2f);
 }
 
 .previewTable td {
-  color: #2f2f3f;
+  color: var(--color-2f2f3f);
 }
 
 .previewTable tr:hover td {
-  background: #f7f5ff;
+  background: var(--color-f7f5ff);
 }
 
 @keyframes fadeIn {
@@ -220,12 +220,12 @@
 
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(123, 75, 255, 0.2);
+    box-shadow: 0 0 0 0 var(--color-rgba-123-75-255-02);
   }
   70% {
-    box-shadow: 0 0 0 12px rgba(123, 75, 255, 0);
+    box-shadow: 0 0 0 12px var(--color-rgba-123-75-255-0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(123, 75, 255, 0);
+    box-shadow: 0 0 0 0 var(--color-rgba-123-75-255-0);
   }
 }

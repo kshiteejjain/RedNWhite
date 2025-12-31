@@ -1,7 +1,7 @@
 .wrapper {
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--color-rgba-255-255-255-08);
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  box-shadow: 0 0 10px var(--color-rgba-0-0-0-005);
   padding: 15px;
 }
 .controls {
@@ -12,50 +12,70 @@
 .input, .select {
   padding: 8px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-ccc);
 }
 .table {
   width: 100%;
   border-collapse: collapse;
 }
 .th{
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-ddd);
   padding: 10px;
   text-align: left;
 }
 .td {
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-ddd);
   padding: 10px;
   font-size: 13px;
   font-weight: normal;
-  color: #3e3e3e;
+  color: var(--color-3e3e3e);
 }
 .th{
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-ddd);
   padding: 10px;
   font-size: 13px;
   font-weight: bold;
-  color: #3e3e3e;
+  color: var(--color-3e3e3e);
+}
+.sortable {
+  cursor: pointer;
+  user-select: none;
 }
 .tr:hover{
-  background-color: #ebecf1;
+  background-color: var(--color-ebecf1);
 }
 .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 20px;
 }
-.pagination .button {
-  padding: 5px 10px;
-  border: none;
-  background: #2a5298;
-  color: #fff;
-  border-radius: 5px;
+.pageButton {
+  padding: 6px 10px;
+  min-width: 36px;
+  border: 1px solid var(--color-ccc);
+  background: var(--color-fff);
+  color: var(--color-3e3e3e);
+  border-radius: 6px;
   cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  font-size: calc(var(--font-size-base) - 2px);
 }
-.pagination button:disabled {
-  background: #ccc;
+
+.pageButton:hover:not(:disabled) {
+  background: var(--color-ebecf1);
+  border-color: var(--color-2a5298);
+}
+
+.pageButtonActive {
+  background: var(--color-2a5298);
+  color: var(--color-fff);
+  border-color: var(--color-2a5298);
+}
+
+.pageButton:disabled {
+  background: var(--color-ccc);
+  color: var(--color-fff);
   cursor: not-allowed;
 }
