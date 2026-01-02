@@ -13,7 +13,6 @@ export default function ComingSoon() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        fontFamily: "'Poppins', sans-serif",
         color: "#222",
         textAlign: "center",
         overflow: "hidden",
