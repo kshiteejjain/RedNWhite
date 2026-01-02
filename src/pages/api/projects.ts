@@ -279,7 +279,6 @@ export default async function handler(
           "ownerId",
           "status",
           "source",
-          "participantNotes",
         ] as const
       ).forEach((field) => {
         const value = rest[field];
@@ -299,7 +298,7 @@ export default async function handler(
       const updatedSnap = await getDoc(projectRef);
       return res
         .status(200)
-        .json(serializeProject(updatedSnap.data(), updatedSnap.id));
+        .json(serializeProject(updatedSnap.data() || {}, updatedSnap.id));
     } catch (error) {
       console.error("Failed to update project", error);
       const message =

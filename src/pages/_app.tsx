@@ -1,11 +1,13 @@
 import "@/styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
+import "react-tooltip/dist/react-tooltip.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { ToastContainer } from "react-toastify";
 import { getSession } from "@/utils/authSession";
+import { LoaderProvider } from "@/components/Loader/LoaderProvider";
 
 function AuthGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -47,10 +49,12 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="theme-color" content="#8f0500" />
       </Head>
 
-      <AuthGuard>
-        <Component {...pageProps} />
-      </AuthGuard>
-      <ToastContainer position="bottom-center" autoClose={3000} pauseOnHover theme="dark" />
+      <LoaderProvider>
+        <AuthGuard>
+          <Component {...pageProps} />
+        </AuthGuard>
+        <ToastContainer position="bottom-center" autoClose={3000} pauseOnHover theme="dark" />
+      </LoaderProvider>
     </>
   );
 }

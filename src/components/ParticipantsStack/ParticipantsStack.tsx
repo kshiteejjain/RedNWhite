@@ -1,6 +1,5 @@
 import { useId } from "react";
 import { Tooltip } from "react-tooltip";
-import "react-tooltip/dist/react-tooltip.css";
 import styles from "./ParticipantsStack.module.css";
 
 type ParticipantsStackProps = {
@@ -72,7 +71,7 @@ export function ParticipantsStack({
       {showNames && participants.length > 0 ? (
         <div className={`${styles.names} ${namesClassName ?? ""}`}>
           {visible.join(", ")}
-          {remaining > 0 ? "…" : ""}
+          {remaining > 0 ? "..." : ""}
         </div>
       ) : null}
 
