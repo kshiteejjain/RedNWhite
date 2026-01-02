@@ -244,7 +244,7 @@ input:disabled {
 }
 
 .overlay {
-  background: var(--color-rgba-143-5-0-085);
+  background:#8f0500de;
   color: var(--color-white);
   padding: 60px;
   text-align: center;

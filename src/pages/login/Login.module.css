@@ -172,12 +172,11 @@
 .divider {
   position: relative;
   text-align: center;
-  margin: 25px 0;
+  margin: 25px 0 0 0;
   font-size: 0.8rem;
-  color: var(--color-888);
+  color: var(--color-textGray);
 }
 .divider span {
-  background: var(--color-white);
   padding: 0 10px;
   position: relative;
   z-index: 1;
@@ -195,8 +194,8 @@
 
 /* ---------- TERMS & LINKS ---------- */
 .terms {
-  font-size: 0.75rem;
-  color: var(--color-777);
+  font-size: 13px;
+  color: var(--color-textGray);
   text-align: center;
   margin-top: 15px;
 }

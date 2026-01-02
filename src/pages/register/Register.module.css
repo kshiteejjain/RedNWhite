@@ -159,8 +159,8 @@
 
 /* ---------- TERMS & LINKS ---------- */
 .terms {
-  font-size: 0.75rem;
-  color: var(--color-777);
+  font-size: 13px;
+  color: var(--color-textGray);
   text-align: center;
   margin-top: 15px;
 }
