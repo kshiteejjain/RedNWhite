@@ -279,7 +279,6 @@ export default async function handler(
           "ownerId",
           "status",
           "source",
-          "participantNotes",
         ] as const
       ).forEach((field) => {
         const value = rest[field];
