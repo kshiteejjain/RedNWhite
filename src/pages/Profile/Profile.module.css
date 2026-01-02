@@ -48,7 +48,7 @@
 
 .primary {
   background: linear-gradient(135deg, var(--color-7b4bff), var(--color-ff6fba));
-  color: var(--color-whitefff);
+  color: var(--color-white);
   box-shadow: 0 10px 24px var(--color-rgba-123-75-255-025);
 }
 
@@ -75,7 +75,7 @@
 }
 
 .card {
-  background: var(--color-whitefff);
+  background: var(--color-white);
   border-radius: 16px;
   padding: 18px;
   border: 1px solid var(--color-efe5ff);
